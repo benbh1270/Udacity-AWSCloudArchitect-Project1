@@ -1,0 +1,70 @@
+CUsersbenjaDownloadsssh -i UdacityProject1-Secondary.pem ec2-user@13.56.81.167
+Last login Wed Oct 27 052248 2021 from 104-52-76-29.lightspeed.bcvloh.sbcglobal.net
+
+       __  ___  )
+       _  (        Amazon Linux 2 AMI
+      _________
+
+httpsaws.amazon.comamazon-linux-2
+[ec2-user@ip-10-2-10-67 ~]$ mysql -u admin -p -h udacity.cenm2dw44fdf.us-west-1.rds.amazonaws.com
+Enter password
+Welcome to the MariaDB monitor.  Commands end with ; or g.
+Your MySQL connection id is 10
+Server version 8.0.23 Source distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or 'h' for help. Type 'c' to clear the current input statement.
+
+MySQL [(none)] SHOW DATABASES;
++--------------------+
+ Database           
++--------------------+
+ information_schema 
+ mysql              
+ performance_schema 
+ sample             
+ sys                
++--------------------+
+5 rows in set (0.00 sec)
+
+MySQL [(none)] USE sample;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+MySQL [sample] SHOW TABLES;
++------------------+
+ Tables_in_sample 
++------------------+
+ sample_tbl       
++------------------+
+1 row in set (0.00 sec)
+
+MySQL [sample] SELECT  FROM sample_tbl;
++-----------+----------------+
+ sample_id  sample_text    
++-----------+----------------+
+         1  I can do this! 
++-----------+----------------+
+1 row in set (0.00 sec)
+
+MySQL [sample] INSERT INTO sample_tbl ( sample_text ) VALUES ( I should be able to do this now! );
+Query OK, 1 row affected (0.01 sec)
+
+MySQL [sample] SELECT  FROM sample_tbl;
++-----------+----------------------------------+
+ sample_id  sample_text                      
++-----------+----------------------------------+
+         1  I can do this!                   
+         2  I should be able to do this now! 
++-----------+----------------------------------+
+2 rows in set (0.00 sec)
+
+MySQL [sample] exit
+Bye
+[ec2-user@ip-10-2-10-67 ~]$ exit
+logout
+Connection to 13.56.81.167 closed.
+
+CUsersbenjaDownloads

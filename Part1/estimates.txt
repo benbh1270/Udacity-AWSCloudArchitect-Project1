@@ -1,0 +1,33 @@
+Assuming: 24/7 Support, Proper Documentation, and Remote System Access
+Environment: RDS MySQL DB configured in Multi-AZ and Multi-Region Read Replica
+
+Minimum RTO Single AZ Failure: In the example of a failure in a single Availability Zone (AZ) in the primary region, failover is 
+automatic and handled automatically by the AWS environment. For non-AUrora-type database instances, the failover takes between 1-2 minutes.  
+Also, since AWS keeps the standby instance continuously up-to-date, the data loss will only be for the time that failover is happening.
+So the minimum RTO for this event is 1 minute.
+
+Minimum RTO Single Region Failure: In the example of a failure in the primary region and the existence of a Read Replica in the secondary region, the RTO can be
+calculated from the a series of tasks/events that have to occur in order for the replica to be restored to be the primary instance due to the need to manually 
+promote the the Read Replica.  The Read Replica can be promoted to be a standalone instance.  Example scenario:
+    Time Elapsed                        Event 
+    _________________________________________________________________________
+    0:00                            Problem Occurs
+    0:05                            Alerts Triggerd
+    0:15                            24/7 Support Engaged
+    0:25                            Support Processes Ticket/Consults Knowledge Base
+    0:30                            Page Next Level Support
+    0:40-1:30                       Next Level Support Online
+    0:55-1:45                       Next Level Support Up To Speed
+    1:15-2:05                       Root Cause Identified
+    1:30-2:20                       Fix Implemented
+    1:45-2:35                       Systems restored
+So, the RTO is between 1:45 and 2:35.  This is dependent on the response time of the Next Level Support groups and the ability to quickly triage and identify
+the root cause.  During this window, the DB will not be available and will not be accepting changes.
+
+Minimum RPO Single AZ Failure: Since RPO is measured by the amount of time between the last good backup and the time of corruption, the RPO for this scenario would be 0,
+as there is always a real-time backup in the second AZ.  There are edge cases that would necessitate restoring from the backup logs.  Those are granular to about 5
+minutes, so the worst case RPO is 5 minutes.
+
+Minimum RPO Single Region Failure: The RPO for a single region failure where there is a read replica available in another region, will again be very low
+as the data is continuously replicated to the read replica.  So the data loss approaches 0, though the same edge cases apply, leaving an approximate RPO of 0 and worst 
+case RPO of 5 minutes.
